@@ -5451,7 +5451,7 @@
 
     const tabPanel = document.querySelector('.services__tabs-js');
     const moreBtn = document.querySelector('.about__button-js');
-    tabPanel.addEventListener('click', e => {
+    tabPanel && tabPanel.addEventListener('click', e => {
       const tabsContainer = document.querySelector('.services__content-js');
       const tab = e.target.closest('.services__tab-js').dataset.services;
 
@@ -5462,7 +5462,7 @@
         nextActiveTab.classList.add('services__tab-container-active');
       }
     });
-    moreBtn.addEventListener('click', () => {
+    moreBtn && moreBtn.addEventListener('click', () => {
       const aboutText = document.querySelector('.about__text');
       aboutText.classList.toggle('about__text_active');
       aboutText.classList.contains('about__text_active') ? moreBtn.textContent = 'Скрыть текст' : moreBtn.textContent = 'Раскрыть текст';
@@ -5513,5 +5513,18 @@
 
     });
     wow.init();
+
+    const uslugi = document.querySelector('.uslugi-list-js');
+    const tabContainer = document.querySelector('.tab-js');
+    uslugi.addEventListener('click', e => {
+      const id = e.target.dataset.usluga;
+      const btn = e.target;
+      const prevUsluga = uslugi.querySelector('.uslugi_active');
+      const prevTab = tabContainer.querySelector('.tab_active');
+      prevTab.classList.remove('tab_active');
+      tabContainer.querySelector(`[data-id='${id}']`).classList.add('tab_active');
+      prevUsluga.classList.remove('uslugi_active');
+      btn.classList.add('uslugi_active');
+    });
 
 }));

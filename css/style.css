@@ -1670,6 +1670,105 @@ template {
     margin: 0 auto;
 }
 
+.uslugi {
+    margin-bottom: 40px;
+}
+
+.uslugi ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+}
+
+.uslugi ul li {
+    background-color: darkblue;
+    border-radius: 10px;
+    color: white;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.tab {
+    margin-top: 40px;
+}
+
+.tab p span {
+    font-weight: bold;
+}
+
+.tab h2 {
+    margin-top: 20px;
+}
+
+.tab ul {
+    -ms-flex-direction: column;
+        flex-direction: column;
+}
+
+.tab ul li {
+    background-color: unset;
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+/* Wobble Horizontal */
+
+@keyframes hvr-wobble-horizontal {
+    16.65% {
+        transform: translateX(8px);
+    }
+    33.3% {
+        transform: translateX(-6px);
+    }
+    49.95% {
+        transform: translateX(4px);
+    }
+    66.6% {
+        transform: translateX(-2px);
+    }
+    83.25% {
+        transform: translateX(1px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.hvr-wobble-horizontal {
+    display: inline-block;
+    vertical-align: middle;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+
+.hvr-wobble-horizontal:hover, .hvr-wobble-horizontal:focus, .hvr-wobble-horizontal:active {
+    animation-name: hvr-wobble-horizontal;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+}
+
+.uslugi_active {
+    background-color: white !important;
+    border: 1px solid darkblue;
+    color: darkblue !important;
+}
+
+.tab-content {
+    height: 0;
+    overflow: hidden;
+}
+
+.tab_active {
+    height: auto;
+}
+
 .footer__container {
     display: -ms-flexbox;
     display: flex;
