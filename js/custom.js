@@ -5521,9 +5521,9 @@
       const btn = e.target;
       const prevUsluga = uslugi.querySelector('.uslugi_active');
       const prevTab = tabContainer.querySelector('.tab_active');
-      prevTab.classList.remove('tab_active');
+      prevTab && prevTab.classList.remove('tab_active');
       tabContainer.querySelector(`[data-id='${id}']`).classList.add('tab_active');
-      prevUsluga.classList.remove('uslugi_active');
+      prevUsluga && prevUsluga.classList.remove('uslugi_active');
       btn.classList.add('uslugi_active');
     });
 
