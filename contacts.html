@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="date=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="format-detection" content="email=no">
+    <meta content="notranslate" name="google">
+    <meta property="og:image" content="img/sharing/logo.png">
+    <meta property="vk:image" content="img/sharing/logo.png">
+    <meta name="twitter:image:src" content="img/sharing/logo.png">
+    <link rel="icon" type="image/ico" sizes="16x16" href="img/favicon/favicon-16x16.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="libs/animate.css">
+    <link rel="stylesheet" href="css/style.min.css">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#fffff">
+    <meta name="msapplication-navbutton-color" content="#000">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#000">
+    <title>Главная</title>
+</head>
+
+<body class="body">
+    <header class="header">
+        <div class="container">
+            <div class="header__top">
+                <div class="logo wow fadeInDown"><svg class="logo__img">
+                        <use xlink:href="img/symbols.svg#logo"></use>
+                    </svg></div>
+                <div class="burger burger-js"><span></span></div>
+                <nav class="header__navigation">
+                    <div class="header__navigation-container">
+                        <div class="header__navigation-close-btn">
+                            <div class="header__navigation-close-container"></div>
+                        </div>
+                        <ul>
+                            <li class="hvr-underline-from-center wow fadeInDown" data-wow-delay=".5s"> <a href="index.html">Главная</a></li>
+                            <li class="hvr-underline-from-center wow fadeInDown" data-wow-delay="1s"><a href="about.html">О компании</a></li>
+                            <li class="hvr-underline-from-center wow fadeInDown" data-wow-delay="1.5s"><a href="uslugi.html">Наши услуги</a></li>
+                            <li class="hvr-underline-from-center wow fadeInDown" data-wow-delay="2s"><a href="contacts.html">Контакты</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="info">
+                    <p class="wow fadeInDown" data-wow-delay=".5s">Ежедневно 8:00 - 20:00</p><a class="wow fadeInDown" href="tel:89132153140" data-wow-delay="1s">8 (913) 215-3140</a><a class="wow fadeInDown" href="tel:88005053953" data-wow-delay="1.5s">8 (800) 505-3953 <span>(звонок бесплатный)</span></a>
+                </div><button class="button btn-open-modal-js wow fadeInDown">Консультация</button>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <section class="contacts">
+            <h2 class="wow fadeInDown">Контакты</h2>
+            <div class="contacts__container">
+                <div class="contacts__left">
+                    <p>Телефон:</p><a class="wow fadeInLeft" href="tel:88005053953" data-wow-delay=".2s">8 (800) 505-3953</a><a class="wow fadeInLeft" href="tel:89132153140" data-wow-delay=".3s">8 (913) 215-3140</a>
+                    <p>E-mail:</p><a href="mailto:fm_s@mail.ru">fm_s@mail.ru</a>
+                </div>
+                <div class="contacts__form wow fadeInRight">
+                    <form class="modal__form modal__form-js" action="#" method="post"></form>
+                    <h3 class="form__title">Напишите свой вопрос, мы свяжемся с вами в ближайшее время.</h3>
+                    <div class="form__placeholder-container"><input type="text" placeholder=" " required="required" /><label>Наименование продукции</label></div>
+                    <div class="form__placeholder-container"><input type="email" placeholder=" " required="required" /><label>Email</label></div>
+                    <div class="form__placeholder-container"><input type="tel" placeholder=" " required="required" /><label>Ваш телефон</label></div>
+                    <div class="form__placeholder-container"><textarea type="text" placeholder=" " required="required"></textarea><label>Сообщение</label></div><button class="button contacts__form-btn" type="submit">Отправить</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <div class="modal">
+        <div class="modal__container">
+            <div class="modal__close btn-close-js"></div>
+            <div class="modal__container-content">
+                <form class="modal__form modal__form-js" action="#" method="post">
+                    <h3 class="form__title">Напишите свой вопрос и я напишу или перезвоню вам.</h3>
+                    <div class="form__placeholder-container"><input type="text" placeholder=" " required="required" /><label>Наименование продукции</label></div>
+                    <div class="form__placeholder-container"><input type="email" placeholder=" " required="required" /><label>Email</label></div>
+                    <div class="form__placeholder-container"><input type="tel" placeholder=" " required="required" /><label>Ваш телефон</label></div>
+                    <div class="form__placeholder-container"><textarea type="text" placeholder=" " required="required"></textarea><label>Сообщение</label></div><button class="button contacts__form-btn" type="submit">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="content">
+                <div class="footer__container">
+                    <ul class="footer__navigation">
+                        <li class="footer__navigation-item wow fadeInDown" data-wow-delay=".4s"> <a href="index.html">Главная</a></li>
+                        <li class="footer__navigation-item wow fadeInDown" data-wow-delay=".6s"> <a href="about.html">О компании</a></li>
+                        <li class="footer__navigation-item wow fadeInDown" data-wow-delay=".8s"> <a href="uslugi.html">Наши услуги</a></li>
+                        <li class="footer__navigation-item wow fadeInDown" data-wow-delay="1s"> <a href="contacts.html">Контакты </a></li>
+                    </ul>
+                    <div class="header__callme wow fadeInDown" data-wow-delay="1.2s">
+                        <p>Свяжитесь с нами:</p><a href="tel:88005053953">8 (800) 505-3953 <span>(бесплатный звонок)<span></a><a href="tel:89132153140">8 (913) 215-3140</a><a href="mailto:fm_s@mail.ru">fm_s@mail.ru</a></div></div><div class="footer__bottom-container">   <a class="hvr-icon-wobble-horizontal" href="">Политика конфиденциальности</a><a href="https://github.com/Ravil377">Разработка сайта</a></div></div></div></footer><script src="libs/wow.min.js"></script><script src="js/custom.js"></script></body></html>

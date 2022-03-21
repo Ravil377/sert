@@ -1271,6 +1271,41 @@ template {
     background-color: darkblue;
 }
 
+.main {
+    position: relative;
+}
+
+.main::after {
+    content: "";
+    position: fixed;
+    right: 0;
+    top: -200px;
+    width: 400px;
+    height: 600px;
+    background-image: url("/img/content/3.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: -1;
+    -ms-transform: rotate(-20deg);
+        transform: rotate(-20deg);
+    opacity: 0.3;
+}
+
+.main::before {
+    content: "";
+    position: fixed;
+    left: 0;
+    bottom: -200px;
+    width: 400px;
+    height: 600px;
+    background-image: url("/img/content/8.jpg");
+    z-index: -1;
+    -ms-transform: rotate(20deg);
+        transform: rotate(20deg);
+    opacity: 0.3;
+    background-size: contain;
+}
+
 .services h2 {
     text-align: center;
     color: darkblue;
@@ -1706,8 +1741,12 @@ template {
 }
 
 .tab ul {
+    margin-top: 10px;
+    margin-bottom: 20px;
     -ms-flex-direction: column;
         flex-direction: column;
+    padding-left: 30px;
+    list-style: disc;
 }
 
 .tab ul li {
