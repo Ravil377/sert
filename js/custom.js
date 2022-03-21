@@ -3,33 +3,24 @@
     factory();
 })((function () { 'use strict';
 
-    const burger = document.querySelector(".burger-js"); // const burgerMenuItems = document.querySelectorAll(".menu__item");
-
+    const burger = document.querySelector(".burger-js");
     const menu = document.querySelector(".header__navigation");
     const closeMenuBtn = menu.querySelector('.header__navigation-close-btn');
     const body = document.body;
+    const btns = document.querySelectorAll('.button-js');
 
     const openBurgerMenu = () => {
       menu.classList.toggle("header__navigation_active");
-      body.classList.toggle("body_fixed"); // document.addEventListener("click", checkPressOverlay);
+      body.classList.toggle("body_fixed");
     };
 
     const burgerMenuClose = () => {
       body.classList.remove("body_fixed");
-      menu.classList.remove("header__navigation_active"); // document.removeEventListener("click", checkPressOverlay);
-    }; // const checkPressOverlay = (e) => {
-    //     e.preventDefault();
-    //     if (e.target.closest(".header__menu") == null && e.target != burger) {
-    //         burgerMenuClose();
-    //     }
-    // };
-
+      menu.classList.remove("header__navigation_active");
+    };
 
     burger.addEventListener("click", openBurgerMenu);
-    closeMenuBtn.addEventListener("click", burgerMenuClose); // burgerMenuItems.forEach((item) => {
-    //     item.addEventListener("click", burgerMenuClose);
-    // });
-
+    closeMenuBtn.addEventListener("click", burgerMenuClose);
     const btnsClose = document.querySelector(".btn-close-js");
     const modalOpenBtn = document.querySelector(".btn-open-modal-js");
     const modal = document.querySelector(".modal");
@@ -44,6 +35,8 @@
       body.classList.add("body_fixed");
       modal.classList.add(`modal_opened`);
     };
+
+    btns.forEach(btn => btn.addEventListener('click', openModal));
 
     const checkKeyPress = e => {
       if (e.code === "Escape") {
@@ -1363,6 +1356,32 @@
       });
     }
 
+    function classesToSelector(classes) {
+      if (classes === void 0) {
+        classes = '';
+      }
+
+      return "." + classes.trim().replace(/([\.:!\/])/g, '\\$1') // eslint-disable-line
+      .replace(/ /g, '.');
+    }
+
+    function createElementIfNotDefined($container, params, createElements, checkProps) {
+      var document = getDocument();
+
+      if (createElements) {
+        Object.keys(checkProps).forEach(function (key) {
+          if (!params[key] && params.auto === true) {
+            var element = document.createElement('div');
+            element.className = checkProps[key];
+            $container.append(element);
+            params[key] = element;
+          }
+        });
+      }
+
+      return params;
+    }
+
     var support;
 
     function calcSupport() {
@@ -1563,8 +1582,8 @@
       }
     };
 
-    function _extends() {
-      _extends = Object.assign || function (target) {
+    function _extends$2() {
+      _extends$2 = Object.assign || function (target) {
         for (var i = 1; i < arguments.length; i++) {
           var source = arguments[i];
 
@@ -1578,7 +1597,7 @@
         return target;
       };
 
-      return _extends.apply(this, arguments);
+      return _extends$2.apply(this, arguments);
     }
     var Observer = {
       attach: function attach(target, options) {
@@ -1654,7 +1673,7 @@
       create: function create() {
         var swiper = this;
         bindModuleMethods(swiper, {
-          observer: _extends({}, Observer, {
+          observer: _extends$2({}, Observer, {
             observers: []
           })
         });
@@ -5449,6 +5468,636 @@
     Swiper.use([Resize, Observer$1]);
     var Swiper$1 = Swiper;
 
+    function _extends$1() {
+      _extends$1 = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
+      return _extends$1.apply(this, arguments);
+    }
+    var Pagination = {
+      update: function update() {
+        // Render || Update Pagination bullets/items
+        var swiper = this;
+        var rtl = swiper.rtl;
+        var params = swiper.params.pagination;
+        if (!params.el || !swiper.pagination.el || !swiper.pagination.$el || swiper.pagination.$el.length === 0) return;
+        var slidesLength = swiper.virtual && swiper.params.virtual.enabled ? swiper.virtual.slides.length : swiper.slides.length;
+        var $el = swiper.pagination.$el; // Current/Total
+
+        var current;
+        var total = swiper.params.loop ? Math.ceil((slidesLength - swiper.loopedSlides * 2) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+
+        if (swiper.params.loop) {
+          current = Math.ceil((swiper.activeIndex - swiper.loopedSlides) / swiper.params.slidesPerGroup);
+
+          if (current > slidesLength - 1 - swiper.loopedSlides * 2) {
+            current -= slidesLength - swiper.loopedSlides * 2;
+          }
+
+          if (current > total - 1) current -= total;
+          if (current < 0 && swiper.params.paginationType !== 'bullets') current = total + current;
+        } else if (typeof swiper.snapIndex !== 'undefined') {
+          current = swiper.snapIndex;
+        } else {
+          current = swiper.activeIndex || 0;
+        } // Types
+
+
+        if (params.type === 'bullets' && swiper.pagination.bullets && swiper.pagination.bullets.length > 0) {
+          var bullets = swiper.pagination.bullets;
+          var firstIndex;
+          var lastIndex;
+          var midIndex;
+
+          if (params.dynamicBullets) {
+            swiper.pagination.bulletSize = bullets.eq(0)[swiper.isHorizontal() ? 'outerWidth' : 'outerHeight'](true);
+            $el.css(swiper.isHorizontal() ? 'width' : 'height', swiper.pagination.bulletSize * (params.dynamicMainBullets + 4) + "px");
+
+            if (params.dynamicMainBullets > 1 && swiper.previousIndex !== undefined) {
+              swiper.pagination.dynamicBulletIndex += current - swiper.previousIndex;
+
+              if (swiper.pagination.dynamicBulletIndex > params.dynamicMainBullets - 1) {
+                swiper.pagination.dynamicBulletIndex = params.dynamicMainBullets - 1;
+              } else if (swiper.pagination.dynamicBulletIndex < 0) {
+                swiper.pagination.dynamicBulletIndex = 0;
+              }
+            }
+
+            firstIndex = current - swiper.pagination.dynamicBulletIndex;
+            lastIndex = firstIndex + (Math.min(bullets.length, params.dynamicMainBullets) - 1);
+            midIndex = (lastIndex + firstIndex) / 2;
+          }
+
+          bullets.removeClass(params.bulletActiveClass + " " + params.bulletActiveClass + "-next " + params.bulletActiveClass + "-next-next " + params.bulletActiveClass + "-prev " + params.bulletActiveClass + "-prev-prev " + params.bulletActiveClass + "-main");
+
+          if ($el.length > 1) {
+            bullets.each(function (bullet) {
+              var $bullet = $(bullet);
+              var bulletIndex = $bullet.index();
+
+              if (bulletIndex === current) {
+                $bullet.addClass(params.bulletActiveClass);
+              }
+
+              if (params.dynamicBullets) {
+                if (bulletIndex >= firstIndex && bulletIndex <= lastIndex) {
+                  $bullet.addClass(params.bulletActiveClass + "-main");
+                }
+
+                if (bulletIndex === firstIndex) {
+                  $bullet.prev().addClass(params.bulletActiveClass + "-prev").prev().addClass(params.bulletActiveClass + "-prev-prev");
+                }
+
+                if (bulletIndex === lastIndex) {
+                  $bullet.next().addClass(params.bulletActiveClass + "-next").next().addClass(params.bulletActiveClass + "-next-next");
+                }
+              }
+            });
+          } else {
+            var $bullet = bullets.eq(current);
+            var bulletIndex = $bullet.index();
+            $bullet.addClass(params.bulletActiveClass);
+
+            if (params.dynamicBullets) {
+              var $firstDisplayedBullet = bullets.eq(firstIndex);
+              var $lastDisplayedBullet = bullets.eq(lastIndex);
+
+              for (var i = firstIndex; i <= lastIndex; i += 1) {
+                bullets.eq(i).addClass(params.bulletActiveClass + "-main");
+              }
+
+              if (swiper.params.loop) {
+                if (bulletIndex >= bullets.length - params.dynamicMainBullets) {
+                  for (var _i = params.dynamicMainBullets; _i >= 0; _i -= 1) {
+                    bullets.eq(bullets.length - _i).addClass(params.bulletActiveClass + "-main");
+                  }
+
+                  bullets.eq(bullets.length - params.dynamicMainBullets - 1).addClass(params.bulletActiveClass + "-prev");
+                } else {
+                  $firstDisplayedBullet.prev().addClass(params.bulletActiveClass + "-prev").prev().addClass(params.bulletActiveClass + "-prev-prev");
+                  $lastDisplayedBullet.next().addClass(params.bulletActiveClass + "-next").next().addClass(params.bulletActiveClass + "-next-next");
+                }
+              } else {
+                $firstDisplayedBullet.prev().addClass(params.bulletActiveClass + "-prev").prev().addClass(params.bulletActiveClass + "-prev-prev");
+                $lastDisplayedBullet.next().addClass(params.bulletActiveClass + "-next").next().addClass(params.bulletActiveClass + "-next-next");
+              }
+            }
+          }
+
+          if (params.dynamicBullets) {
+            var dynamicBulletsLength = Math.min(bullets.length, params.dynamicMainBullets + 4);
+            var bulletsOffset = (swiper.pagination.bulletSize * dynamicBulletsLength - swiper.pagination.bulletSize) / 2 - midIndex * swiper.pagination.bulletSize;
+            var offsetProp = rtl ? 'right' : 'left';
+            bullets.css(swiper.isHorizontal() ? offsetProp : 'top', bulletsOffset + "px");
+          }
+        }
+
+        if (params.type === 'fraction') {
+          $el.find(classesToSelector(params.currentClass)).text(params.formatFractionCurrent(current + 1));
+          $el.find(classesToSelector(params.totalClass)).text(params.formatFractionTotal(total));
+        }
+
+        if (params.type === 'progressbar') {
+          var progressbarDirection;
+
+          if (params.progressbarOpposite) {
+            progressbarDirection = swiper.isHorizontal() ? 'vertical' : 'horizontal';
+          } else {
+            progressbarDirection = swiper.isHorizontal() ? 'horizontal' : 'vertical';
+          }
+
+          var scale = (current + 1) / total;
+          var scaleX = 1;
+          var scaleY = 1;
+
+          if (progressbarDirection === 'horizontal') {
+            scaleX = scale;
+          } else {
+            scaleY = scale;
+          }
+
+          $el.find(classesToSelector(params.progressbarFillClass)).transform("translate3d(0,0,0) scaleX(" + scaleX + ") scaleY(" + scaleY + ")").transition(swiper.params.speed);
+        }
+
+        if (params.type === 'custom' && params.renderCustom) {
+          $el.html(params.renderCustom(swiper, current + 1, total));
+          swiper.emit('paginationRender', $el[0]);
+        } else {
+          swiper.emit('paginationUpdate', $el[0]);
+        }
+
+        if (swiper.params.watchOverflow && swiper.enabled) {
+          $el[swiper.isLocked ? 'addClass' : 'removeClass'](params.lockClass);
+        }
+      },
+      render: function render() {
+        // Render Container
+        var swiper = this;
+        var params = swiper.params.pagination;
+        if (!params.el || !swiper.pagination.el || !swiper.pagination.$el || swiper.pagination.$el.length === 0) return;
+        var slidesLength = swiper.virtual && swiper.params.virtual.enabled ? swiper.virtual.slides.length : swiper.slides.length;
+        var $el = swiper.pagination.$el;
+        var paginationHTML = '';
+
+        if (params.type === 'bullets') {
+          var numberOfBullets = swiper.params.loop ? Math.ceil((slidesLength - swiper.loopedSlides * 2) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+
+          if (swiper.params.freeMode && !swiper.params.loop && numberOfBullets > slidesLength) {
+            numberOfBullets = slidesLength;
+          }
+
+          for (var i = 0; i < numberOfBullets; i += 1) {
+            if (params.renderBullet) {
+              paginationHTML += params.renderBullet.call(swiper, i, params.bulletClass);
+            } else {
+              paginationHTML += "<" + params.bulletElement + " class=\"" + params.bulletClass + "\"></" + params.bulletElement + ">";
+            }
+          }
+
+          $el.html(paginationHTML);
+          swiper.pagination.bullets = $el.find(classesToSelector(params.bulletClass));
+        }
+
+        if (params.type === 'fraction') {
+          if (params.renderFraction) {
+            paginationHTML = params.renderFraction.call(swiper, params.currentClass, params.totalClass);
+          } else {
+            paginationHTML = "<span class=\"" + params.currentClass + "\"></span>" + ' / ' + ("<span class=\"" + params.totalClass + "\"></span>");
+          }
+
+          $el.html(paginationHTML);
+        }
+
+        if (params.type === 'progressbar') {
+          if (params.renderProgressbar) {
+            paginationHTML = params.renderProgressbar.call(swiper, params.progressbarFillClass);
+          } else {
+            paginationHTML = "<span class=\"" + params.progressbarFillClass + "\"></span>";
+          }
+
+          $el.html(paginationHTML);
+        }
+
+        if (params.type !== 'custom') {
+          swiper.emit('paginationRender', swiper.pagination.$el[0]);
+        }
+      },
+      init: function init() {
+        var swiper = this;
+        swiper.params.pagination = createElementIfNotDefined(swiper.$el, swiper.params.pagination, swiper.params.createElements, {
+          el: 'swiper-pagination'
+        });
+        var params = swiper.params.pagination;
+        if (!params.el) return;
+        var $el = $(params.el);
+        if ($el.length === 0) return;
+
+        if (swiper.params.uniqueNavElements && typeof params.el === 'string' && $el.length > 1) {
+          $el = swiper.$el.find(params.el);
+        }
+
+        if (params.type === 'bullets' && params.clickable) {
+          $el.addClass(params.clickableClass);
+        }
+
+        $el.addClass(params.modifierClass + params.type);
+
+        if (params.type === 'bullets' && params.dynamicBullets) {
+          $el.addClass("" + params.modifierClass + params.type + "-dynamic");
+          swiper.pagination.dynamicBulletIndex = 0;
+
+          if (params.dynamicMainBullets < 1) {
+            params.dynamicMainBullets = 1;
+          }
+        }
+
+        if (params.type === 'progressbar' && params.progressbarOpposite) {
+          $el.addClass(params.progressbarOppositeClass);
+        }
+
+        if (params.clickable) {
+          $el.on('click', classesToSelector(params.bulletClass), function onClick(e) {
+            e.preventDefault();
+            var index = $(this).index() * swiper.params.slidesPerGroup;
+            if (swiper.params.loop) index += swiper.loopedSlides;
+            swiper.slideTo(index);
+          });
+        }
+
+        extend(swiper.pagination, {
+          $el: $el,
+          el: $el[0]
+        });
+
+        if (!swiper.enabled) {
+          $el.addClass(params.lockClass);
+        }
+      },
+      destroy: function destroy() {
+        var swiper = this;
+        var params = swiper.params.pagination;
+        if (!params.el || !swiper.pagination.el || !swiper.pagination.$el || swiper.pagination.$el.length === 0) return;
+        var $el = swiper.pagination.$el;
+        $el.removeClass(params.hiddenClass);
+        $el.removeClass(params.modifierClass + params.type);
+        if (swiper.pagination.bullets) swiper.pagination.bullets.removeClass(params.bulletActiveClass);
+
+        if (params.clickable) {
+          $el.off('click', classesToSelector(params.bulletClass));
+        }
+      }
+    };
+    var Pagination$1 = {
+      name: 'pagination',
+      params: {
+        pagination: {
+          el: null,
+          bulletElement: 'span',
+          clickable: false,
+          hideOnClick: false,
+          renderBullet: null,
+          renderProgressbar: null,
+          renderFraction: null,
+          renderCustom: null,
+          progressbarOpposite: false,
+          type: 'bullets',
+          // 'bullets' or 'progressbar' or 'fraction' or 'custom'
+          dynamicBullets: false,
+          dynamicMainBullets: 1,
+          formatFractionCurrent: function formatFractionCurrent(number) {
+            return number;
+          },
+          formatFractionTotal: function formatFractionTotal(number) {
+            return number;
+          },
+          bulletClass: 'swiper-pagination-bullet',
+          bulletActiveClass: 'swiper-pagination-bullet-active',
+          modifierClass: 'swiper-pagination-',
+          // NEW
+          currentClass: 'swiper-pagination-current',
+          totalClass: 'swiper-pagination-total',
+          hiddenClass: 'swiper-pagination-hidden',
+          progressbarFillClass: 'swiper-pagination-progressbar-fill',
+          progressbarOppositeClass: 'swiper-pagination-progressbar-opposite',
+          clickableClass: 'swiper-pagination-clickable',
+          // NEW
+          lockClass: 'swiper-pagination-lock'
+        }
+      },
+      create: function create() {
+        var swiper = this;
+        bindModuleMethods(swiper, {
+          pagination: _extends$1({
+            dynamicBulletIndex: 0
+          }, Pagination)
+        });
+      },
+      on: {
+        init: function init(swiper) {
+          swiper.pagination.init();
+          swiper.pagination.render();
+          swiper.pagination.update();
+        },
+        activeIndexChange: function activeIndexChange(swiper) {
+          if (swiper.params.loop) {
+            swiper.pagination.update();
+          } else if (typeof swiper.snapIndex === 'undefined') {
+            swiper.pagination.update();
+          }
+        },
+        snapIndexChange: function snapIndexChange(swiper) {
+          if (!swiper.params.loop) {
+            swiper.pagination.update();
+          }
+        },
+        slidesLengthChange: function slidesLengthChange(swiper) {
+          if (swiper.params.loop) {
+            swiper.pagination.render();
+            swiper.pagination.update();
+          }
+        },
+        snapGridLengthChange: function snapGridLengthChange(swiper) {
+          if (!swiper.params.loop) {
+            swiper.pagination.render();
+            swiper.pagination.update();
+          }
+        },
+        destroy: function destroy(swiper) {
+          swiper.pagination.destroy();
+        },
+        'enable disable': function enableDisable(swiper) {
+          var $el = swiper.pagination.$el;
+
+          if ($el) {
+            $el[swiper.enabled ? 'removeClass' : 'addClass'](swiper.params.pagination.lockClass);
+          }
+        },
+        click: function click(swiper, e) {
+          var targetEl = e.target;
+
+          if (swiper.params.pagination.el && swiper.params.pagination.hideOnClick && swiper.pagination.$el.length > 0 && !$(targetEl).hasClass(swiper.params.pagination.bulletClass)) {
+            if (swiper.navigation && (swiper.navigation.nextEl && targetEl === swiper.navigation.nextEl || swiper.navigation.prevEl && targetEl === swiper.navigation.prevEl)) return;
+            var isHidden = swiper.pagination.$el.hasClass(swiper.params.pagination.hiddenClass);
+
+            if (isHidden === true) {
+              swiper.emit('paginationShow');
+            } else {
+              swiper.emit('paginationHide');
+            }
+
+            swiper.pagination.$el.toggleClass(swiper.params.pagination.hiddenClass);
+          }
+        }
+      }
+    };
+
+    function _extends() {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
+      return _extends.apply(this, arguments);
+    }
+    var Autoplay = {
+      run: function run() {
+        var swiper = this;
+        var $activeSlideEl = swiper.slides.eq(swiper.activeIndex);
+        var delay = swiper.params.autoplay.delay;
+
+        if ($activeSlideEl.attr('data-swiper-autoplay')) {
+          delay = $activeSlideEl.attr('data-swiper-autoplay') || swiper.params.autoplay.delay;
+        }
+
+        clearTimeout(swiper.autoplay.timeout);
+        swiper.autoplay.timeout = nextTick(function () {
+          var autoplayResult;
+
+          if (swiper.params.autoplay.reverseDirection) {
+            if (swiper.params.loop) {
+              swiper.loopFix();
+              autoplayResult = swiper.slidePrev(swiper.params.speed, true, true);
+              swiper.emit('autoplay');
+            } else if (!swiper.isBeginning) {
+              autoplayResult = swiper.slidePrev(swiper.params.speed, true, true);
+              swiper.emit('autoplay');
+            } else if (!swiper.params.autoplay.stopOnLastSlide) {
+              autoplayResult = swiper.slideTo(swiper.slides.length - 1, swiper.params.speed, true, true);
+              swiper.emit('autoplay');
+            } else {
+              swiper.autoplay.stop();
+            }
+          } else if (swiper.params.loop) {
+            swiper.loopFix();
+            autoplayResult = swiper.slideNext(swiper.params.speed, true, true);
+            swiper.emit('autoplay');
+          } else if (!swiper.isEnd) {
+            autoplayResult = swiper.slideNext(swiper.params.speed, true, true);
+            swiper.emit('autoplay');
+          } else if (!swiper.params.autoplay.stopOnLastSlide) {
+            autoplayResult = swiper.slideTo(0, swiper.params.speed, true, true);
+            swiper.emit('autoplay');
+          } else {
+            swiper.autoplay.stop();
+          }
+
+          if (swiper.params.cssMode && swiper.autoplay.running) swiper.autoplay.run();else if (autoplayResult === false) {
+            swiper.autoplay.run();
+          }
+        }, delay);
+      },
+      start: function start() {
+        var swiper = this;
+        if (typeof swiper.autoplay.timeout !== 'undefined') return false;
+        if (swiper.autoplay.running) return false;
+        swiper.autoplay.running = true;
+        swiper.emit('autoplayStart');
+        swiper.autoplay.run();
+        return true;
+      },
+      stop: function stop() {
+        var swiper = this;
+        if (!swiper.autoplay.running) return false;
+        if (typeof swiper.autoplay.timeout === 'undefined') return false;
+
+        if (swiper.autoplay.timeout) {
+          clearTimeout(swiper.autoplay.timeout);
+          swiper.autoplay.timeout = undefined;
+        }
+
+        swiper.autoplay.running = false;
+        swiper.emit('autoplayStop');
+        return true;
+      },
+      pause: function pause(speed) {
+        var swiper = this;
+        if (!swiper.autoplay.running) return;
+        if (swiper.autoplay.paused) return;
+        if (swiper.autoplay.timeout) clearTimeout(swiper.autoplay.timeout);
+        swiper.autoplay.paused = true;
+
+        if (speed === 0 || !swiper.params.autoplay.waitForTransition) {
+          swiper.autoplay.paused = false;
+          swiper.autoplay.run();
+        } else {
+          ['transitionend', 'webkitTransitionEnd'].forEach(function (event) {
+            swiper.$wrapperEl[0].addEventListener(event, swiper.autoplay.onTransitionEnd);
+          });
+        }
+      },
+      onVisibilityChange: function onVisibilityChange() {
+        var swiper = this;
+        var document = getDocument();
+
+        if (document.visibilityState === 'hidden' && swiper.autoplay.running) {
+          swiper.autoplay.pause();
+        }
+
+        if (document.visibilityState === 'visible' && swiper.autoplay.paused) {
+          swiper.autoplay.run();
+          swiper.autoplay.paused = false;
+        }
+      },
+      onTransitionEnd: function onTransitionEnd(e) {
+        var swiper = this;
+        if (!swiper || swiper.destroyed || !swiper.$wrapperEl) return;
+        if (e.target !== swiper.$wrapperEl[0]) return;
+        ['transitionend', 'webkitTransitionEnd'].forEach(function (event) {
+          swiper.$wrapperEl[0].removeEventListener(event, swiper.autoplay.onTransitionEnd);
+        });
+        swiper.autoplay.paused = false;
+
+        if (!swiper.autoplay.running) {
+          swiper.autoplay.stop();
+        } else {
+          swiper.autoplay.run();
+        }
+      },
+      onMouseEnter: function onMouseEnter() {
+        var swiper = this;
+
+        if (swiper.params.autoplay.disableOnInteraction) {
+          swiper.autoplay.stop();
+        } else {
+          swiper.autoplay.pause();
+        }
+
+        ['transitionend', 'webkitTransitionEnd'].forEach(function (event) {
+          swiper.$wrapperEl[0].removeEventListener(event, swiper.autoplay.onTransitionEnd);
+        });
+      },
+      onMouseLeave: function onMouseLeave() {
+        var swiper = this;
+
+        if (swiper.params.autoplay.disableOnInteraction) {
+          return;
+        }
+
+        swiper.autoplay.paused = false;
+        swiper.autoplay.run();
+      },
+      attachMouseEvents: function attachMouseEvents() {
+        var swiper = this;
+
+        if (swiper.params.autoplay.pauseOnMouseEnter) {
+          swiper.$el.on('mouseenter', swiper.autoplay.onMouseEnter);
+          swiper.$el.on('mouseleave', swiper.autoplay.onMouseLeave);
+        }
+      },
+      detachMouseEvents: function detachMouseEvents() {
+        var swiper = this;
+        swiper.$el.off('mouseenter', swiper.autoplay.onMouseEnter);
+        swiper.$el.off('mouseleave', swiper.autoplay.onMouseLeave);
+      }
+    };
+    var Autoplay$1 = {
+      name: 'autoplay',
+      params: {
+        autoplay: {
+          enabled: false,
+          delay: 3000,
+          waitForTransition: true,
+          disableOnInteraction: true,
+          stopOnLastSlide: false,
+          reverseDirection: false,
+          pauseOnMouseEnter: false
+        }
+      },
+      create: function create() {
+        var swiper = this;
+        bindModuleMethods(swiper, {
+          autoplay: _extends({}, Autoplay, {
+            running: false,
+            paused: false
+          })
+        });
+      },
+      on: {
+        init: function init(swiper) {
+          if (swiper.params.autoplay.enabled) {
+            swiper.autoplay.start();
+            var document = getDocument();
+            document.addEventListener('visibilitychange', swiper.autoplay.onVisibilityChange);
+            swiper.autoplay.attachMouseEvents();
+          }
+        },
+        beforeTransitionStart: function beforeTransitionStart(swiper, speed, internal) {
+          if (swiper.autoplay.running) {
+            if (internal || !swiper.params.autoplay.disableOnInteraction) {
+              swiper.autoplay.pause(speed);
+            } else {
+              swiper.autoplay.stop();
+            }
+          }
+        },
+        sliderFirstMove: function sliderFirstMove(swiper) {
+          if (swiper.autoplay.running) {
+            if (swiper.params.autoplay.disableOnInteraction) {
+              swiper.autoplay.stop();
+            } else {
+              swiper.autoplay.pause();
+            }
+          }
+        },
+        touchEnd: function touchEnd(swiper) {
+          if (swiper.params.cssMode && swiper.autoplay.paused && !swiper.params.autoplay.disableOnInteraction) {
+            swiper.autoplay.run();
+          }
+        },
+        destroy: function destroy(swiper) {
+          swiper.autoplay.detachMouseEvents();
+
+          if (swiper.autoplay.running) {
+            swiper.autoplay.stop();
+          }
+
+          var document = getDocument();
+          document.removeEventListener('visibilitychange', swiper.autoplay.onVisibilityChange);
+        }
+      }
+    };
+
+    Swiper$1.use([Pagination$1, Autoplay$1]);
     const tabPanel = document.querySelector('.services__tabs-js');
     const moreBtn = document.querySelector('.about__button-js');
     tabPanel && tabPanel.addEventListener('click', e => {
@@ -5466,6 +6115,17 @@
       const aboutText = document.querySelector('.about__text');
       aboutText.classList.toggle('about__text_active');
       aboutText.classList.contains('about__text_active') ? moreBtn.textContent = 'Скрыть текст' : moreBtn.textContent = 'Раскрыть текст';
+    });
+    new Swiper$1(".slider-main", {
+      slidesPerView: 1,
+      loop: true,
+      autoplay: {
+        delay: 2000
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true
+      }
     });
     new Swiper$1(".about__icons", {
       slidesPerView: 'auto',
@@ -5516,7 +6176,7 @@
 
     const uslugi = document.querySelector('.uslugi-list-js');
     const tabContainer = document.querySelector('.tab-js');
-    uslugi.addEventListener('click', e => {
+    uslugi && uslugi.addEventListener('click', e => {
       const id = e.target.dataset.usluga;
       const btn = e.target;
       const prevUsluga = uslugi.querySelector('.uslugi_active');
