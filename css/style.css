@@ -1758,6 +1758,26 @@ template {
     animation-iteration-count: infinite;
 }
 
+.services__tab-container span {
+    font-weight: bold;
+}
+
+.services__tab-container a {
+    display: block;
+    text-decoration: none;
+    color: darkblue;
+    cursor: pointer;
+    transition: 0.7s;
+}
+
+.services__tab-container a:hover {
+    opacity: 0.7;
+}
+
+.services__tab-container a:last-of-type {
+    margin-bottom: 20px;
+}
+
 .form {
     max-width: 600px;
     margin: 0 auto;
