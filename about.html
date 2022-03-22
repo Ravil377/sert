@@ -72,13 +72,14 @@
             </ul>
             <p>Если сложилась ситуация, когда вы не знаете, требуется ли какой-либо разрешительный документ для производства или ввоза продукции в страну, обратитесь к специалистам нашего центра любым удобным Вам способом, и мы определим необходимость сертификации товаров в самые короткие сроки. Наши центры сертификации продукции работают в разных уголках страны, поэтому сделать заказ и получить бесплатные консультации вы можете в любое время суток, просто позвоните нашим специалистам или оставьте свой запрос на сайте компании.</p>
             <div class="form">
-                <form class="modal__form modal__form-js" action="#" method="post"></form>
-                <h3 class="form__title">Напишите свой вопрос и я напишу или перезвоню вам.</h3>
-                <div class="form__placeholder-container"><input type="text" placeholder=" " /><label>Имя</label></div>
-                <div class="form__placeholder-container"><input type="email" placeholder=" " required="required" /><label>Email</label></div>
-                <div class="form__placeholder-container"><input type="tel" placeholder=" " required="required" /><label>Телефон</label></div>
-                <div class="form__placeholder-container"><input type="text" placeholder=" " /><label>Город</label></div>
-                <div class="form__placeholder-container"><textarea type="text" placeholder=" " required="required"></textarea><label>Ваш вопрос</label></div><button class="button contacts__form-btn" type="submit">Отправить</button>
+                <form class="modal__form modal__form-js" action="https://formspree.io/f/xoqrlzrz" method="post">
+                    <h3 class="form__title">Напишите свой вопрос и я напишу или перезвоню вам.</h3>
+                    <div class="form__placeholder-container"><input type="text" name="Name" placeholder=" " /><label>Имя</label></div>
+                    <div class="form__placeholder-container"><input type="email" name="email" placeholder=" " required="required" /><label>Email</label></div>
+                    <div class="form__placeholder-container"><input type="tel" name="tel" placeholder=" " required="required" /><label>Телефон</label></div>
+                    <div class="form__placeholder-container"><input type="text" name="city" placeholder=" " /><label>Город</label></div>
+                    <div class="form__placeholder-container"><textarea type="text" name="question" placeholder=" " required="required"></textarea><label>Ваш вопрос</label></div><button class="button contacts__form-btn" type="submit">Отправить</button>
+                </form>
             </div>
         </div>
     </main>
@@ -86,12 +87,12 @@
         <div class="modal__container">
             <div class="modal__close btn-close-js"></div>
             <div class="modal__container-content">
-                <form class="modal__form modal__form-js" action="#" method="post">
+                <form class="modal__form modal__form-js" action="https://formspree.io/f/xoqrlzrz" method="post">
                     <h3 class="form__title">Напишите свой вопрос и я напишу или перезвоню вам.</h3>
-                    <div class="form__placeholder-container"><input type="text" placeholder=" " required="required" /><label>Наименование продукции</label></div>
-                    <div class="form__placeholder-container"><input type="email" placeholder=" " required="required" /><label>Email</label></div>
-                    <div class="form__placeholder-container"><input type="tel" placeholder=" " required="required" /><label>Ваш телефон</label></div>
-                    <div class="form__placeholder-container"><textarea type="text" placeholder=" " required="required"></textarea><label>Сообщение</label></div><button class="button contacts__form-btn" type="submit">Отправить</button>
+                    <div class="form__placeholder-container"><input type="text" name="product" placeholder=" " /><label>Наименование продукции</label></div>
+                    <div class="form__placeholder-container"><input type="email" name="email" placeholder=" " required="required" /><label>Email</label></div>
+                    <div class="form__placeholder-container"><input type="tel" name="tel" placeholder=" " required="required" /><label>Ваш телефон</label></div>
+                    <div class="form__placeholder-container"><textarea type="text" name="message" placeholder=" " required="required"></textarea><label>Сообщение</label></div><button class="button contacts__form-btn" type="submit">Отправить</button>
                 </form>
             </div>
         </div>

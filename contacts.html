@@ -62,12 +62,13 @@
                     <p>E-mail:</p><a href="mailto:fm_s@mail.ru">fm_s@mail.ru</a>
                 </div>
                 <div class="contacts__form wow fadeInRight">
-                    <form class="modal__form modal__form-js" action="#" method="post"></form>
-                    <h3 class="form__title">Напишите свой вопрос, мы свяжемся с вами в ближайшее время.</h3>
-                    <div class="form__placeholder-container"><input type="text" placeholder=" " required="required" /><label>Наименование продукции</label></div>
-                    <div class="form__placeholder-container"><input type="email" placeholder=" " required="required" /><label>Email</label></div>
-                    <div class="form__placeholder-container"><input type="tel" placeholder=" " required="required" /><label>Ваш телефон</label></div>
-                    <div class="form__placeholder-container"><textarea type="text" placeholder=" " required="required"></textarea><label>Сообщение</label></div><button class="button contacts__form-btn" type="submit">Отправить</button>
+                    <form class="modal__form modal__form-js" action="https://formspree.io/f/xoqrlzrz" method="post">
+                        <h3 class="form__title">Напишите свой вопрос, мы свяжемся с вами в ближайшее время.</h3>
+                        <div class="form__placeholder-container"><input type="text" name="product" placeholder=" " /><label>Наименование продукции</label></div>
+                        <div class="form__placeholder-container"><input type="email" name="email" placeholder=" " required="required" /><label>Email</label></div>
+                        <div class="form__placeholder-container"><input type="tel" name="tel" placeholder=" " required="required" /><label>Ваш телефон</label></div>
+                        <div class="form__placeholder-container"><textarea type="text" name="message" placeholder=" "></textarea><label>Сообщение</label></div><button class="button contacts__form-btn" type="submit">Отправить</button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -76,12 +77,12 @@
         <div class="modal__container">
             <div class="modal__close btn-close-js"></div>
             <div class="modal__container-content">
-                <form class="modal__form modal__form-js" action="#" method="post">
+                <form class="modal__form modal__form-js" action="https://formspree.io/f/xoqrlzrz" method="post">
                     <h3 class="form__title">Напишите свой вопрос и я напишу или перезвоню вам.</h3>
-                    <div class="form__placeholder-container"><input type="text" placeholder=" " required="required" /><label>Наименование продукции</label></div>
-                    <div class="form__placeholder-container"><input type="email" placeholder=" " required="required" /><label>Email</label></div>
-                    <div class="form__placeholder-container"><input type="tel" placeholder=" " required="required" /><label>Ваш телефон</label></div>
-                    <div class="form__placeholder-container"><textarea type="text" placeholder=" " required="required"></textarea><label>Сообщение</label></div><button class="button contacts__form-btn" type="submit">Отправить</button>
+                    <div class="form__placeholder-container"><input type="text" name="product" placeholder=" " /><label>Наименование продукции</label></div>
+                    <div class="form__placeholder-container"><input type="email" name="email" placeholder=" " required="required" /><label>Email</label></div>
+                    <div class="form__placeholder-container"><input type="tel" name="tel" placeholder=" " required="required" /><label>Ваш телефон</label></div>
+                    <div class="form__placeholder-container"><textarea type="text" name="message" placeholder=" " required="required"></textarea><label>Сообщение</label></div><button class="button contacts__form-btn" type="submit">Отправить</button>
                 </form>
             </div>
         </div>
